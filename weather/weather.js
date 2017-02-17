@@ -1,7 +1,7 @@
 
 module.exports = {
 
-    getTodaysWeather() {
+    getTodaysWeather: function() {
         return {
             day: new Date(),
             temperatureDegrees: 10,
