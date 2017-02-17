@@ -5,6 +5,7 @@ var config = require('./config');
 // modules for IoT data
 var weather = require('./weather/weather');
 var metro = require('./metro_times/metro');
+var common = require('./common/common');
 
 var app = express();
 
@@ -61,18 +62,21 @@ app.get('/metro/departures/:minsFromNow/:amount', function(req, res) {
         var output = data.map(function(val) {
             var date = new Date(val.departure_time.value * 1000);
 
-            return [
-                Math.floor(date.getHours() / 10),
-                date.getHours() % 10,
-                Math.floor(date.getMinutes() / 10),
-                date.getMinutes() % 10
-            ];
-        })
+            return common.formatDate(date, "timedigits");
+        });
 
         res.header("Content-Type", "applicaton/json");
         res.send(JSON.stringify(output));
     });
 
+});
+
+app.get("/time/:format", function(req, res) {
+
+    var output = common.formatDate(new Date(), req.params["format"]);
+
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(output));
 });
 
 
