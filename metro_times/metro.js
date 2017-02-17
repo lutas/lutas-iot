@@ -62,5 +62,36 @@ module.exports = {
 
         return getData(departureTime);
 
+    },
+
+    getNextMetros: function(departureTime, amount) {
+        
+        const WaitTimeTillNextMetro = -420; //seconds
+
+        var allTimes = [];
+        var self = this;
+
+        function process(data) {
+
+            allTimes.push(data);
+
+            if (allTimes.length == amount) {
+                return Promise.resolve(allTimes);
+            }
+
+            var newDepartureTime = data.departure_time.value + WaitTimeTillNextMetro;
+            var promise = self.getMetroFrom(newDepartureTime).then(process);
+            return promise;
+        }
+
+        // call promises in series
+        return new Promise(function(accept, reject) { 
+                     
+            self.getMetroFrom(departureTime).then(process).then(function(val) {
+
+                accept(val);
+            });
+        });
     }
+
 }
