@@ -49,7 +49,7 @@ app.get('/metro/:minsFromNow/:amount', function(req, res) {
 
 });
 
-app.get('/metro/departures/:minsFromNow/:amount', function(req, res) {
+app.get('/metro/departures/:minsFromNow/:amount/:format', function(req, res) {
 
     var minsFromNow = Number(req.params.minsFromNow);
     var amount = Number(req.params.amount);
@@ -62,7 +62,7 @@ app.get('/metro/departures/:minsFromNow/:amount', function(req, res) {
         var output = data.map(function(val) {
             var date = new Date(val.departure_time.value * 1000);
 
-            return common.formatDate(date, "timedigits");
+            return common.formatDate(date, req.params.format);
         });
 
         res.header("Content-Type", "applicaton/json");

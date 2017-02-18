@@ -9,6 +9,14 @@ module.exports = {
                     Math.floor(date.getMinutes() / 10),
                     date.getMinutes() % 10
                 ];
+
+            case "minsFromNow":
+                {
+                    var diffMs = (date - new Date());
+                    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+                    return diffMins;
+                }
             
             case "datedigits":
                 return [
