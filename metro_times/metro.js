@@ -4,6 +4,8 @@ var config = require('../config');
 var Promise = require('promise');
 var http = require('https');
 
+require('array.prototype.find').shim();
+
 console.log(config.metro.location);
 console.log(config.metro.apiKey)
 
