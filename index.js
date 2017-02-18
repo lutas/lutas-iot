@@ -66,7 +66,7 @@ app.get('/metro/departures/:minsFromNow/:amount/:format', function(req, res) {
         });
 
         res.header("Content-Type", "applicaton/json");
-        res.send(JSON.stringify(output));
+        res.send(JSON.stringify(output, null, 4));
     });
 
 });
