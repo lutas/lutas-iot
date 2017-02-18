@@ -1,7 +1,7 @@
 
 var config = require('../config');
 
-//var Promise = require('promise');
+var Promise = require('promise');
 var http = require('https');
 
 console.log(config.metro.location);
