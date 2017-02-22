@@ -8,10 +8,16 @@ module.exports = {
         apiKey: process.env["GoogleAPIKey"]
     },
 
-    dates: [
+    datesTo: [
         process.env["Date1"],
         process.env["Date2"],
         process.env["Date3"]
+    ],
+
+    datesFrom: [
+        process.env["Date1From"],
+        process.env["Date2From"],
+        process.env["Date3From"]
     ]
 
 };

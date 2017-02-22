@@ -82,10 +82,22 @@ app.get("/time/:format", function(req, res) {
 app.get("/weekstill/:date/", function(req, res) {
 
     if (!isNaN(req.params.date)) {
-        req.params.date = config.dates[req.params.date];
+        req.params.date = config.datesTo[req.params.date];
     }
 
     var output = common.getWeeksTill(req.params.date);
+
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(output));
+});
+
+app.get("/weeksfrom/:date/", function(req, res) {
+
+    if (!isNaN(req.params.date)) {
+        req.params.date = config.datesFrom[req.params.date];
+    }
+
+    var output = common.getWeeksFrom(req.params.date);
 
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(output));

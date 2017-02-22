@@ -1,5 +1,12 @@
 var moment = require("moment");
 
+function diff(lhs, rhs) {
+    var dif = lhs - rhs;
+    var weeks = Math.round(dif/1000/60/60/24/7);
+
+    return weeks;
+}
+
 module.exports = {
     formatDate: function(date, format) {
 
@@ -40,10 +47,14 @@ module.exports = {
 
         var date = moment(dateString, "DD-MM-YYYY");
 
-        var dif = date.valueOf() - new Date();
-        var weeks = Math.round(dif/1000/60/60/24/7);
+        return diff(date.valueOf(), new Date());        
+    },
 
-        return weeks;
+    getWeeksFrom: function(dateString) {
+
+        var date = moment(dateString, "DD-MM-YYYY");
+
+        return diff(new Date(), date.valueOf());
     },
 
     getDaysTill: function(dateString) {
