@@ -79,6 +79,18 @@ app.get("/time/:format", function(req, res) {
     res.send(JSON.stringify(output));
 });
 
+app.get("/weekstill/:date/", function(req, res) {
+
+    if (!isNaN(req.params.date)) {
+        req.params.date = config.dates[req.params.date];
+    }
+
+    var output = common.getWeeksTill(req.params.date);
+
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(output));
+});
+
 
 app.listen(config.serverPort, function() {
     console.log("Started application on port " + config.serverPort);

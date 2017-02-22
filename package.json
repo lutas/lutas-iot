@@ -20,6 +20,7 @@
     "array.prototype.find": "^2.0.3",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
+    "moment": "^2.17.1",
     "promise": "^7.1.1"
   }
 }

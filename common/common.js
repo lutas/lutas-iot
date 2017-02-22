@@ -1,3 +1,5 @@
+var moment = require("moment");
+
 module.exports = {
     formatDate: function(date, format) {
 
@@ -17,7 +19,7 @@ module.exports = {
 
                     return diffMins;
                 }
-            
+
             case "datedigits":
                 return [
                     Math.floor(date.getDate() / 10),
@@ -32,5 +34,25 @@ module.exports = {
             case "millis":
                 return date.getTime();
         }
+    },
+
+    getWeeksTill: function(dateString) {
+
+        var date = moment(dateString, "DD-MM-YYYY");
+
+        var dif = date.valueOf() - new Date();
+        var weeks = Math.round(dif/1000/60/60/24/7);
+
+        return weeks;
+    },
+
+    getDaysTill: function(dateString) {
+        var date = moment(dateString, "DD-MM-YYYY");
+
+        var dif = date.valueOf() - new Date();
+        var days = Math.round(dif/1000/60/60/24);
+
+        return days;
     }
-}
+
+};
