@@ -1,5 +1,5 @@
 
-var config = require('../config');
+var config = require('../../config');
 
 var Promise = require('promise');
 var http = require('https');
@@ -59,6 +59,28 @@ function getData(departureTime) {
 }
 
 module.exports = {
+
+    getMinsFromNow: function(req, res) {
+
+        var minsFromNow = Number(req.params.minsFromNow);
+        var amount = Number(req.params.amount);
+        
+        var time = new Date().getTime() + (minsFromNow * 60 * 1000);
+        var timeInSecs = Math.floor(time / 1000);
+
+        metro.getNextMetros(timeInSecs, amount).then(function(data) {
+
+            var output = data.map(function(val) {
+                var date = new Date(val.departure_time.value * 1000);
+
+                return common.formatDate(date, req.params.format);
+            });
+
+            res.header("Content-Type", "applicaton/json");
+            res.send(JSON.stringify(output));
+        });
+
+    },
 
     getMetroFrom: function(departureTime) {
 
