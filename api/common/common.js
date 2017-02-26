@@ -2,7 +2,7 @@ var moment = require("moment");
 
 function diff(lhs, rhs) {
     var dif = lhs - rhs;
-    var weeks = Math.round(dif/1000/60/60/24/7);
+    var weeks = Math.floor(dif/1000/60/60/24/7);
 
     return weeks;
 }
