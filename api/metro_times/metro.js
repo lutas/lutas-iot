@@ -1,5 +1,6 @@
 
 var config = require('../../config');
+var common = require('../common/common');
 
 var Promise = require('promise');
 var http = require('https');
@@ -58,6 +59,37 @@ function getData(departureTime) {
     });
 }
 
+ function getNextMetros(departureTime, amount) {
+        
+    const WaitTimeTillNextMetro = -420; //seconds
+
+    var allTimes = [];
+    var self = this;
+
+    function process(data) {
+
+        allTimes.push(data);
+
+        if (allTimes.length == amount) {
+            return Promise.resolve(allTimes);
+        }
+
+        var newDepartureTime = data.departure_time.value + WaitTimeTillNextMetro;
+        var promise = getData(newDepartureTime).then(process);
+        return promise;
+    }
+
+    // call promises in series
+    return new Promise(function(accept, reject) { 
+                    
+        getData(departureTime).then(process).then(function(val) {
+
+            accept(val);
+        });
+    });
+
+}
+
 module.exports = {
 
     getMinsFromNow: function(req, res) {
@@ -68,9 +100,9 @@ module.exports = {
         var time = new Date().getTime() + (minsFromNow * 60 * 1000);
         var timeInSecs = Math.floor(time / 1000);
 
-        metro.getNextMetros(timeInSecs, amount).then(function(data) {
+        getNextMetros(timeInSecs, amount).then(function(data) {
 
-            var output = data.map(function(val) {
+             var output = data.map(function(val) {
                 var date = new Date(val.departure_time.value * 1000);
 
                 return common.formatDate(date, req.params.format);
@@ -82,40 +114,11 @@ module.exports = {
 
     },
 
+    getNextMetros: getNextMetros,
+
     getMetroFrom: function(departureTime) {
 
         return getData(departureTime);
 
-    },
-
-    getNextMetros: function(departureTime, amount) {
-        
-        const WaitTimeTillNextMetro = -420; //seconds
-
-        var allTimes = [];
-        var self = this;
-
-        function process(data) {
-
-            allTimes.push(data);
-
-            if (allTimes.length == amount) {
-                return Promise.resolve(allTimes);
-            }
-
-            var newDepartureTime = data.departure_time.value + WaitTimeTillNextMetro;
-            var promise = self.getMetroFrom(newDepartureTime).then(process);
-            return promise;
-        }
-
-        // call promises in series
-        return new Promise(function(accept, reject) { 
-                     
-            self.getMetroFrom(departureTime).then(process).then(function(val) {
-
-                accept(val);
-            });
-        });
     }
-
 }
