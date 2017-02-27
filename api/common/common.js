@@ -45,16 +45,24 @@ module.exports = {
 
     getWeeksTill: function(dateString) {
 
-        var date = moment(dateString, "DD-MM-YYYY");
+        var fd = dateString.split('-').map(function(val) { return Number(val); });
+        var dateTo = new Date(fd[2], fd[1] - 1, fd[0], 23, 59);
 
-        return diff(date.valueOf(), new Date());        
+        var today = new Date();
+        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+
+        return diff(dateTo.valueOf(), dateFrom.valueOf());        
     },
 
     getWeeksFrom: function(dateString) {
 
-        var date = moment(dateString, "DD-MM-YYYY");
+        var fd = dateString.split('-').map(function(val) { return Number(val); });
+        var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
 
-        return diff(new Date(), date.valueOf());
+        var today = new Date();
+        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+
+        return diff(dateFrom.valueOf(), dateTo.valueOf());        
     },
 
     getDaysTill: function(dateString) {
