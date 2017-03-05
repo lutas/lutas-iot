@@ -2,7 +2,11 @@ var moment = require("moment");
 
 function diff(lhs, rhs) {
     var dif = lhs - rhs;
-    var weeks = Math.floor(dif/1000/60/60/24/7);
+
+    var dayLength = 1000 * 60 * 60 * 24;
+    var days = (dif / dayLength);
+
+    var weeks = Math.ceil(days / 7);
 
     return weeks;
 }
@@ -46,12 +50,12 @@ module.exports = {
     getWeeksTill: function(dateString) {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
-        var dateTo = new Date(fd[2], fd[1] - 1, fd[0], 23, 59);
+        var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
 
         var today = new Date();
         var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-        return diff(dateTo.valueOf(), dateFrom.valueOf());        
+        return diff(dateTo, dateFrom);       
     },
 
     getWeeksFrom: function(dateString) {
