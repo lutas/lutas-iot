@@ -1,14 +1,12 @@
 var moment = require("moment");
 
-function diff(lhs, rhs) {
+function diffDays(lhs, rhs) {
     var dif = lhs - rhs;
 
     var dayLength = 1000 * 60 * 60 * 24;
     var days = (dif / dayLength);
 
-    var weeks = Math.ceil(days / 7);
-
-    return weeks;
+    return days;
 }
 
 module.exports = {
@@ -55,7 +53,10 @@ module.exports = {
         var today = new Date();
         var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-        return diff(dateTo, dateFrom);       
+        var days = diffDays(dateTo, dateFrom);   
+        var weeks = Math.ceil(days / 7);
+
+        return weeks;  
     },
 
     getWeeksFrom: function(dateString) {
@@ -65,17 +66,17 @@ module.exports = {
 
         var today = new Date();
         var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+        
+        var days = diffDays(dateFrom, dateTo);   
+        var weeks = Math.floor(days / 7);
 
-        return diff(dateFrom.valueOf(), dateTo.valueOf());        
+        return weeks;        
     },
 
     getDaysTill: function(dateString) {
         var date = moment(dateString, "DD-MM-YYYY");
-
-        var dif = date.valueOf() - new Date();
-        var days = Math.round(dif/1000/60/60/24);
-
-        return days;
+        
+        return diffDays(date, new Date());
     }
 
 };
