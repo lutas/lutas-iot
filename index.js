@@ -6,6 +6,11 @@ var config = require('./config');
 var weather = require('./api/weather/weather');
 var metro = require('./api/metro_times/metro');
 var common = require('./api/common/common');
+var fs = require('fs');
+
+if (!fs.existsSync('./cache')) {
+    fs.mkdirSync('./cache');
+}
 
 var app = express();
 

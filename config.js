@@ -18,6 +18,11 @@ module.exports = {
         process.env["Date1From"],
         process.env["Date2From"],
         process.env["Date3From"]
-    ]
+    ],
+
+    running: {
+        login: process.env["RunLogin"],
+        password: process.env["RunPassword"]
+    }
 
 };
