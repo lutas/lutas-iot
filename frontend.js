@@ -10,17 +10,14 @@ app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.html'}));
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public')));
     
-// download page data
-
-var time = new Date().getTime();
-var timeInSecs = Math.floor(time / 1000);
-
 app.get('/', function(req, res) {
     // serve the reporting HTML
     res.render('index');
 });
 
 app.get('/metro', function(req, res) {
+    var time = new Date().getTime();
+    var timeInSecs = Math.floor(time / 1000);
 
     api.metro.getNextMetros(timeInSecs, 3).then(function(result) {
         res.render('metro', {
