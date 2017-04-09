@@ -10,13 +10,22 @@
             </div>
             <div class="col-md-8 text-left">
                 <span class="large">5 day forecast</span><p>
-                <div class="row">
-                {{#each weather.forecast}}
-                    <div class="col-xs-2 text-center">
-                    {{>weatherDay this}}
-                    </div>
-                {{/each}}
-                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        {{#each weather.forecast}}
+                            <th>{{shortday}}</th>
+                        {{/each}}
+                        </tr>
+                    </thead>
+                    <tr>
+                    {{#each weather.forecast}}
+                    <td>
+                        {{>weatherDay this}}
+                    </td>
+                    {{/each}}
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
