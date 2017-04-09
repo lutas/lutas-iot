@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Next Metro times</div>
+    <div class="panel-body">
+        <ol>
+        {{#each metrotimes}}
+            <li>
+                <span class="temperature">{{this.departure_time.text}}</span>
+                ({{{formatDate (secondsToMillis this.departure_time.value) "minsFromNow"}}} mins)
+            </li>
+        {{/each}}
+        </ol>
+    </div>
+</div>

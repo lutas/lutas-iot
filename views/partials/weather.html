@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Hebburn Weather</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-4 text-left">
+                <span class="large">Now</span><p>
+                Temperature: <span class="temperature">{{weather.current.temperature}}°c</span><br/>
+                Feels like: <span class="temperature">{{weather.current.feelslike}}°c</span>
+                <p>{{weather.current.skytext}} <image src="{{{weather.current.imageUrl}}}" /></p>
+            </div>
+            <div class="col-md-8 text-left">
+                <span class="large">5 day forecast</span><p>
+                <div class="row">
+                {{#each weather.forecast}}
+                    <div class="col-xs-2 text-center">
+                    {{>weatherDay this}}
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

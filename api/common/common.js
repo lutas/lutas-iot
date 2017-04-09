@@ -10,6 +10,10 @@ function diffDays(lhs, rhs) {
 }
 
 module.exports = {
+    secondsToMillis: function(val) {
+        return val * 1000;
+    },
+
     formatDate: function(date, format) {
 
         switch (format) {

@@ -1,21 +1,35 @@
 
+var weather = require('weather-js');
+
 module.exports = {
 
     get: function(req, res) {
 
         res.header("content-type", "application/json");
 
-        var todayData = weather.getTodaysWeather();
-        res.send(JSON.stringify(todayData, null, 4));
+        weather.getTodaysWeather().then(function(data) {
+            res.send(JSON.stringify(data, null, 4));
+        },
+        function(err) {
+            res.send(err);
+        });
     },
 
     getTodaysWeather: function() {
-        return {
-            day: new Date(),
-            temperatureDegrees: 10,
-            description: "Raining",
-            image: null
-        };
+
+        return new Promise(function(accept, reject) {
+
+            weather.find({
+                search: "Hebburn, UK",
+                degreeType: "C"
+            }, function(err, result) {
+                if (err) {
+                    reject(err);
+                }
+
+                accept(result[0]);
+            });
+        });
     }
 
 }
