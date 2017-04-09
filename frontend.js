@@ -55,6 +55,45 @@ app.get('/running', function(req, res) {
 
 });
 
+app.get('/light/:lightId', function(req, res) {
+
+    var light = api.lights[req.params.lightId];
+
+    light.isOn().then(function(value) {
+
+        var data = {
+            name: light.name,
+            value: value
+        };
+
+        res.send(data, null, 4);
+    });
+});
+
+app.get('/light/:lightId/on', function(req, res) {
+
+    api.lights[req.params.lightId].on().then(function(success) {
+
+        res.sendStatus(200);
+    }, function(err) {
+
+        res.sendStatus(500);
+        res.send(err);
+    });
+});
+
+app.get('/light/:lightId/off', function(req, res) {
+
+    api.lights[req.params.lightId].off().then(function(success) {
+
+        res.sendStatus(200);
+    }, function(err) {
+
+        res.sendStatus(500);
+        res.send(err);
+    });
+});
+
 app.get('/running/:activityid', function(req, res) {
 
     api.running.login({

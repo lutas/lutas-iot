@@ -23,6 +23,10 @@ module.exports = {
     running: {
         login: process.env["RunLogin"],
         password: process.env["RunPassword"]
+    },
+
+    belkin: {
+        livingRoom: process.env["BelkinLivingRoom"]
     }
 
 };
