@@ -9,9 +9,43 @@
                 </tr>
             </thead>
             <tr>
-                <td>Living room lamp</td>
-                <td><button type="button" class="btn btn-primary">On</button></td>
+                <td>{{livingRoomLamp.name}}</td>
+                <td><button type="button" class="btn btn-primary lightbtn" index="{{livingRoomLamp.id}}">On</button></td>
             </tr>
         </table> 
     </div>
 </div>
+<script>
+    $('.lightbtn').on('click', function(e) {
+
+        var on = e.target.innerHTML === "On";
+        
+        var state = on ? '/off' : '/on';
+
+        var url = './light/' + $(e.target).attr('index') + state;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+                on = !on;
+                e.target.innerHTML = on ? "On" : "Off";
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        });       
+    });
+
+    function refresh() {
+
+        $('.lightbtn').each(function(btn) {
+
+            var url = './light/' + btn.attr('index');
+
+
+        })
+        
+    }
+
+</script>

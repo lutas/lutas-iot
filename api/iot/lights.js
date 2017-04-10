@@ -3,22 +3,23 @@ var wemo = new Wemo();
 
 var config = require('../../config');
 
-var Light = function(name, deviceIP) {
+var Light = function(id, name, deviceIP) {
 
-    isLoaded = false;
     isOn = false;
 
-    var client;
-        
-    wemo.load(deviceIP + "/setup.xml", function(deviceInfo) {
+    var client;    
+    var loadedPromise = new Promise(function(accept, reject) {
 
-        client = wemo.client(deviceInfo);
-        client.on('binaryState', function(value) {
-            console.log(name + " = " + value);
-            isOn = value;
+        wemo.load(deviceIP + "/setup.xml", function(deviceInfo) {
+
+            client = wemo.client(deviceInfo);
+            client.on('binaryState', function(value) {
+                console.log(name + " = " + value);
+                isOn = value;
+            });
+            
+            accept(client);
         });
-
-        isLoaded = true;
     });
 
     function changeState(on) {
@@ -37,7 +38,8 @@ var Light = function(name, deviceIP) {
 
     return {
         name: name,
-        isLoaded: isLoaded,
+        loaded: loadedPromise,
+        id: id,
 
         on: function() {
             return changeState(1);
@@ -65,6 +67,6 @@ var Light = function(name, deviceIP) {
 
 module.exports = [
 
-    new Light("Living Room", config.belkin.livingRoom)
+    new Light(0, "Living Room", config.belkin.livingRoom)
 
 ];

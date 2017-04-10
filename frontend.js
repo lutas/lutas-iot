@@ -30,14 +30,17 @@ app.get('/', function(req, res) {
     Promise.all([
                 api.weather.getTodaysWeather(),
                 api.metro.getNextMetros(timeInSecs, 3),
-                api.calendar.get(config.calendar.icalUrl)
-                ]).then(function(data) {
+                api.calendar.get(config.calendar.icalUrl),
+                api.lights[0].loaded
+                ])
+    .then(function(data) {
         // serve the reporting HTML
         res.render('index', {
 
             weather: data[0],            
             metrotimes: data[1],
             calendarEvents: data[2].getRecentEvents(today, todayPlus),
+            livingRoomLamp: api.lights[0],
             baby: {
                 weeksTill: api.common.getWeeksTill(config.datesTo[0]),
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
@@ -81,11 +84,12 @@ app.get('/light/:lightId/on', function(req, res) {
 
     api.lights[req.params.lightId].on().then(function(success) {
 
-        res.sendStatus(200);
+        res.status(200);
+        res.send(success);
     }, function(err) {
 
-        res.sendStatus(500);
-        res.send(err);
+        res.status(500);
+        res.send(err.message);
     });
 });
 
@@ -93,11 +97,12 @@ app.get('/light/:lightId/off', function(req, res) {
 
     api.lights[req.params.lightId].off().then(function(success) {
 
-        res.sendStatus(200);
+        res.status(200);
+        res.send(success);
     }, function(err) {
 
-        res.sendStatus(500);
-        res.send(err);
+        res.status(500);
+        res.send(err.message);
     });
 });
 
