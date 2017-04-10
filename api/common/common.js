@@ -42,11 +42,19 @@ module.exports = {
                     Math.floor((date.getYear() - 100) / 10),
                     (date.getYear() - 100) % 10
                 ];
+            
+            case "hoursmins":
+                return date.getHours() + ":" + date.getMinutes();
 
             default:
             case "millis":
                 return date.getTime();
         }
+    },
+
+    momentFormat: function(date, format) {
+        
+        return moment(date).format(format);
     },
 
     getWeeksTill: function(dateString) {

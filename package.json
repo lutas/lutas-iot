@@ -20,10 +20,15 @@
     "array.prototype.find": "^2.0.3",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
+    "ical.js": "^1.2.2",
     "moment": "^2.17.1",
+    "node-ical": "^0.5.4",
     "promise": "^7.1.1",
     "runtastic-js": "^1.0.1",
     "weather-js": "^2.0.0",
     "wemo-client": "^0.11.2"
+  },
+  "devDependencies": {
+    "request": "^2.81.0"
   }
 }

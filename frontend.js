@@ -11,7 +11,8 @@ app.engine('.hbs', exphbs({
     extname: '.html',
     helpers: {
         secondsToMillis: api.common.secondsToMillis,
-        formatDate: api.common.formatDate
+        formatDate: api.common.formatDate,
+        momentFormat: api.common.momentFormat
     }
 }));
 app.set('view engine', '.hbs');
@@ -19,18 +20,24 @@ app.use(express.static(path.join(__dirname, 'public')));
     
 app.get('/', function(req, res) {
     
-    var time = new Date().getTime();
+    var now = new Date();
+    var time = now.getTime();
     var timeInSecs = Math.floor(time / 1000);
+
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var todayPlus = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7);
 
     Promise.all([
                 api.weather.getTodaysWeather(),
-                api.metro.getNextMetros(timeInSecs, 3)
+                api.metro.getNextMetros(timeInSecs, 3),
+                api.calendar.get(config.calendar.icalUrl)
                 ]).then(function(data) {
         // serve the reporting HTML
         res.render('index', {
 
             weather: data[0],            
             metrotimes: data[1],
+            calendarEvents: data[2].getRecentEvents(today, todayPlus),
             baby: {
                 weeksTill: api.common.getWeeksTill(config.datesTo[0]),
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])

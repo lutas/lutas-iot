@@ -27,6 +27,10 @@ module.exports = {
 
     belkin: {
         livingRoom: process.env["BelkinLivingRoom"]
+    },
+
+    calendar: {
+        icalUrl: process.env["CalendarUrl"]
     }
 
 };

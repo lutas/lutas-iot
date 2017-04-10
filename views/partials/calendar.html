@@ -1,17 +1,21 @@
 <div class="panel panel-default">
-    <div class="panel-heading">Calendar</div>
+    <div class="panel-heading">Next 7 days</div>
     <div class="panel-body">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date</th>
+                    <th>Day</th>
                     <th>Time</th>
                     <th>Event</th>
                 </tr>
             </thead>
+            {{#each calendarEvents}}
             <tr>
-                <td></td>
+                <td>{{momentFormat start "ddd"}}</td>
+                <td>{{momentFormat start "HH:mm"}}</td>
+                <td>{{summary}}</td>
             </tr>
+            {{/each}}
         </table>
     </div>
 </div>
