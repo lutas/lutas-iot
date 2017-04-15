@@ -1,9 +1,10 @@
 var fs = require('fs');
 var activities = {};
+var mkdirp = require('mkdirp');
 
-var cacheDirectory = "./cache/runactivities";
+var cacheDirectory = "./data/cache/runactivities";
 if (!fs.existsSync(cacheDirectory)) {
-    fs.mkdirSync(cacheDirectory);
+    mkdirp.sync(cacheDirectory);
 }
 
 module.exports = {
