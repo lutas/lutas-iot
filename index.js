@@ -22,7 +22,8 @@ app.engine('.hbs', exphbs({
     helpers: {
         secondsToMillis: api.common.secondsToMillis,
         formatDate: api.common.formatDate,
-        momentFormat: api.common.momentFormat
+        momentFormat: api.common.momentFormat,
+        metresToMiles: api.running.metresToMiles
     }
 }));
 app.set('view engine', '.hbs');

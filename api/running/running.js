@@ -55,6 +55,10 @@ function downloadActivity(api, activityId) {
 module.exports = {
 
     api: null,
+
+    metresToMiles: function(metres) {
+        return Math.round((metres / 1000) / 1.6 * 100) / 100;
+    },
     
     login: function(config) {
 
