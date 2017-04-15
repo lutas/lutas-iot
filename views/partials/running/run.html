@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Run</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                <th>Date</th>
+                <th>Total Miles</th>
+                <th>Time</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>{{momentFormat start_time "ddd DD MMMM \at HH:mm"}}</td>
+                <td>{{distance}}</td>
+                <td>{{momentFormat duration "mm:ss"}}</td>
+            </tr>
+        </table> 
+    </div>
+</div>

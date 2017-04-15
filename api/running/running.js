@@ -84,6 +84,28 @@ module.exports = {
         return downloadActivity(this.api, activityId);
     },
 
+    getMonthActivities: function(month, year) {
+
+        var from = year + '/' + month + '/01';
+        var to = year + '/' + month + '/31';
+
+        var api = this.api;
+
+        var completedPromise = new Promise(function(completedAccept, completedReject) {
+            api.fetchActivities(30, {'from': new Date(from), 'to': new Date(to)}, function(err, activities) {
+
+                if (err) {
+                    completedReject(err);
+                    return;
+                }
+
+                completedAccept(activities.filter(function(val) { return val != null }));
+            })
+        });
+
+        return completedPromise;
+    },
+
     getMonthStats: function(month, year) {
 
         var from = year + '/' + month + '/01';

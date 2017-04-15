@@ -1,6 +1,9 @@
 
 var express = require('express');
 var config = require('./config');
+var exphbs = require('express-handlebars');
+var path = require('path');
+var api = require('./api/api')
 
 // modules for IoT data
 var weather = require('./api/weather/weather');
@@ -13,8 +16,20 @@ if (!fs.existsSync('./cache')) {
 }
 
 var app = express();
+app.engine('.hbs', exphbs({
+    defaultLayout: 'single', 
+    extname: '.html',
+    helpers: {
+        secondsToMillis: api.common.secondsToMillis,
+        formatDate: api.common.formatDate,
+        momentFormat: api.common.momentFormat
+    }
+}));
+app.set('view engine', '.hbs');
+app.use(express.static(path.join(__dirname, 'public')));
 
 require('./frontend')(app, express);
+require('./runningfrontend')(app, express);
 
 app.get('/weather', weather.get);
 
