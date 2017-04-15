@@ -1,7 +1,7 @@
 var fs = require('fs');
 var activities = {};
 
-var cacheDirectory = "./cache/runactivies";
+var cacheDirectory = "./cache/runactivities";
 if (!fs.existsSync(cacheDirectory)) {
     fs.mkdirSync(cacheDirectory);
 }
