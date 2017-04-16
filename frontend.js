@@ -31,6 +31,12 @@ app.get('/', function(req, res) {
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
             }
         });
+    }, function(err) {
+
+        res.render('error', {
+            title: "Failed getting information for frontend",
+            message: err.message || err
+        })
     });
 
 });

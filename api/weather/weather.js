@@ -25,6 +25,7 @@ module.exports = {
             }, function(err, result) {
                 if (err) {
                     reject(err);
+                    return;
                 }
 
                 accept(result[0]);
