@@ -10,7 +10,7 @@
             </thead>
             <tr>
                 <td>{{livingRoomLamp.name}}</td>
-                <td><button type="button" class="btn btn-primary lightbtn" index="{{livingRoomLamp.id}}">On</button></td>
+                <td><button type="button" class="btn btn-primary lightbtn" index="{{livingRoomLamp.id}}">??</button></td>
             </tr>
         </table> 
     </div>
@@ -33,19 +33,34 @@
             },
             error: function(err) {
                 console.error(err);
+                e.target.innerHTML = "Err";
             }
         });       
     });
 
     function refresh() {
 
-        $('.lightbtn').each(function(btn) {
+        $('.lightbtn').each(function(index, btn) {
 
-            var url = './light/' + btn.attr('index');
+            var url = './light/' + $(btn).attr('index');
 
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    btn.innerHTML = data.value != "0" ? "On" : "Off"
+                },
+                error: function(err) {
+                    console.error(err);
+                    btn.innerHTML = "Err";
+                }
+            })
 
-        })
+        });
         
     }
+
+    refresh();
 
 </script>
