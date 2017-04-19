@@ -27,6 +27,7 @@ var Light = function(id, name, deviceIP) {
         return new Promise(function(accept, reject) {
             client.setBinaryState(on, function(err, response) {
                 if (err) {
+                    console.error("Failed to change light state");
                     reject(err);
                 }
                 else {
@@ -54,6 +55,7 @@ var Light = function(id, name, deviceIP) {
 
                 client.getBinaryState(function(err, state) {
                     if (err) {
+                        console.error("Failed to get light state");
                         reject(err);
                     } else {
                         accept(state);

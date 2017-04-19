@@ -68,6 +68,7 @@ module.exports = {
             self.api = new Runtastic(config.emailAddress, config.password);
             self.api.login(function(err, user) {
                 if (err) {
+                    console.error("Failed to login to runtastic");
                     reject(err);
                 } 
                 else {
@@ -99,6 +100,7 @@ module.exports = {
             api.fetchActivities(30, {'from': new Date(from), 'to': new Date(to)}, function(err, activities) {
 
                 if (err) {
+                    console.error("Failed to get this month's running activities");
                     completedReject(err);
                     return;
                 }
@@ -121,6 +123,7 @@ module.exports = {
             api.fetchActivities(50, {'from': new Date(from), 'to': new Date(to)}, function(err, activities) {
 
                 if (err) {
+                    console.error("Failed to retrieve running monthstats");
                     completedReject(err);
                     return;
                 }

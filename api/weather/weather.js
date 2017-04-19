@@ -24,6 +24,7 @@ module.exports = {
                 degreeType: "C"
             }, function(err, result) {
                 if (err) {
+                    console.error("Failed to getTodaysWeather");
                     reject(err);
                     return;
                 }
