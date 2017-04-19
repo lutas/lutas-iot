@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+        <tr>
+        {{#each weather.forecast}}
+            <th>{{shortday}}</th>
+        {{/each}}
+        </tr>
+    </thead>
+    <tr>
+    {{#each weather.forecast}}
+    <td>
+        {{>weatherDay this}}
+    </td>
+    {{/each}}
+    </tr>
+</table>

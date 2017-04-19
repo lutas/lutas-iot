@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{#if icon}}
+        <span class="glyphicon {{icon}} panel-icon"></span>
+        {{/if}}
+        <span style="text-align: center">{{heading}}</span>
+    </div>
+    <div class="panel-body">
+        {{>(lookup . 'content')}}
+    </div>
+</div>

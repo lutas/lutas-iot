@@ -4,39 +4,11 @@
         <div class="row">
             <div class="col-xs-4 text-left">
                 <span class="large">Now</span>
-                    <table class="table">
-                        <tr>
-                            <td>Temperature</td>
-                            <td><span class="temperature">{{weather.current.temperature}}°c</span></td>
-                        </tr>
-                        <tr>
-                            <td>Feels like</td>
-                            <td><span class="temperature">{{weather.current.feelslike}}°c</span></td>
-                        </tr>
-                        <tr>
-                            <td>{{weather.current.skytext}}</td>
-                            <td><image src="{{{weather.current.imageUrl}}}" /></td>
-                        </tr>
-                    </table>
+                {{weather/today}}
             </div>
             <div class="col-md-8 text-left">
                 <span class="large">5 day forecast</span><p>
-                <table class="table">
-                    <thead>
-                        <tr>
-                        {{#each weather.forecast}}
-                            <th>{{shortday}}</th>
-                        {{/each}}
-                        </tr>
-                    </thead>
-                    <tr>
-                    {{#each weather.forecast}}
-                    <td>
-                        {{>weatherDay this}}
-                    </td>
-                    {{/each}}
-                    </tr>
-                </table>
+                {{weather/forecast}}
             </div>
         </div>
     </div>
