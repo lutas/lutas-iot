@@ -12,11 +12,13 @@ app.get('/', function(req, res) {
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var todayPlus = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7);
 
+    var allLightsLoaded = Promise.all(api.lights.map(light => light.loaded));
+
     Promise.all([
                 api.weather.getTodaysWeather(),
                 api.metro.getNextMetros(timeInSecs, 3),
                 api.calendar.get(config.calendar.icalUrl),
-                api.lights[0].loaded
+                allLightsLoaded
                 ])
     .then(function(data) {
         // serve the reporting HTML
@@ -25,7 +27,7 @@ app.get('/', function(req, res) {
             weather: data[0],            
             metrotimes: data[1],
             calendarEvents: data[2].getRecentEvents(today, todayPlus),
-            livingRoomLamp: api.lights[0],
+            lights: api.lights,
             baby: {
                 weeksTill: api.common.getWeeksTill(config.datesTo[0]),
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
@@ -58,9 +60,17 @@ app.get('/light/:lightId', function(req, res) {
 
     light.isOn().then(function(value) {
 
+        var isOn;
+
+        if (value.hasOwnProperty("state")) {
+            isOn = value.state.on;
+        } else {
+            isOn = value != 0
+        }
+
         var data = {
             name: light.name,
-            value: value
+            isOn: isOn
         };
 
         res.send(data, null, 4);
@@ -87,6 +97,11 @@ app.get('/light/:lightId/off', function(req, res) {
         res.status(200);
         res.send(success);
     }, function(err) {
+
+        res.status(500);
+        res.send(err.message);
+    })
+    .catch(function(err) {
 
         res.status(500);
         res.send(err.message);

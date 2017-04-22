@@ -29,6 +29,11 @@ module.exports = {
         livingRoom: process.env["BelkinLivingRoom"]
     },
 
+    philips: {
+        username: process.env["PhilipsHueUser"],
+        bridgeIP: process.env["PhilipsHueIP"]
+    },
+
     calendar: {
         icalUrl: process.env["CalendarUrl"]
     }

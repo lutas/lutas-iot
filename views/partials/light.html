@@ -8,10 +8,12 @@
                 <th>Status</th>
                 </tr>
             </thead>
+            {{#each lights}}
             <tr>
-                <td>{{livingRoomLamp.name}}</td>
-                <td><button type="button" class="btn btn-primary lightbtn" index="{{livingRoomLamp.id}}">??</button></td>
+                <td>{{name}}</td>
+                <td><button type="button" class="btn btn-primary lightbtn" index="{{id}}">??</button></td>
             </tr>
+            {{/each}}
         </table> 
     </div>
 </div>
@@ -49,7 +51,7 @@
                 type: 'GET',
                 success: function(data) {
                     console.log(data);
-                    btn.innerHTML = data.value != "0" ? "On" : "Off"
+                    btn.innerHTML = data.isOn ? "On" : "Off"
                 },
                 error: function(err) {
                     console.error(err);
