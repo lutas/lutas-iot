@@ -29,6 +29,8 @@ module.exports = {
                     return;
                 }
 
+                result[0].forecast = result[0].forecast.splice(2, 3);
+
                 accept(result[0]);
             });
         });
