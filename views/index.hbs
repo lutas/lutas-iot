@@ -1,25 +1,20 @@
-<div class="well">
-    <h1>LutasIOT - Home</h1>
-    For all your home automation needs!
-</div>
-
 <div class="row">
-    <div class="col-md-4 text-center">
+    <div class="col-md-3 text-center">
         {{>panel heading="Today's weather" content="weather/today"}}
     </div>
     <div class="col-md-4 text-center">
         {{>panel heading="3 day forecast" content="weather/forecast"}}
     </div>
-    <div class="col-md-4 text-center">
-        {{>baby}}
-        {{>metrotimes}}
+    <div class="col-md-5 text-center">
+        {{>light}}
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4 text-center">
-        {{>light}}
+    <div class="col-md-3 text-center">
+        {{>metrotimes}}
     </div>
-    <div class="col-md-2 text-center">
+    <div class="col-md-3 text-center">
+        {{>baby}}
     </div>
     <div class="col-md-6 text-center">
         {{>calendar}}
