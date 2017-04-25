@@ -1,6 +1,16 @@
 var api = require('./api/api');
 var config = require('./config');
 
+var handleError = function(err) {
+
+    console.error(err.message || err);
+
+    res.render('error', {
+        title: "Failed getting information for frontend",
+        message: err.message || err
+    })
+};
+
 module.exports = function(app, express) {
 
 app.get('/', function(req, res) {
@@ -33,13 +43,7 @@ app.get('/', function(req, res) {
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
             }
         });
-    }, function(err) {
-
-        res.render('error', {
-            title: "Failed getting information for frontend",
-            message: err.message || err
-        })
-    });
+    }, handleError);
 
 });
 
@@ -51,7 +55,7 @@ app.get('/metro', function(req, res) {
         res.render('metro', {
             times: result
         });
-    });
+    }, handleError);
 });
 
 app.get('/light/:lightId', function(req, res) {
@@ -63,8 +67,10 @@ app.get('/light/:lightId', function(req, res) {
         var isOn;
 
         if (value.hasOwnProperty("state")) {
+            // philips light
             isOn = value.state.on;
         } else {
+            // belkin light
             isOn = value != 0
         }
 
@@ -74,7 +80,7 @@ app.get('/light/:lightId', function(req, res) {
         };
 
         res.send(data, null, 4);
-    });
+    }, handleError);
 });
 
 app.get('/light/:lightId/on', function(req, res) {

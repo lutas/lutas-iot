@@ -16,6 +16,10 @@ const apiDataUrl = "/maps/api/directions/json?origin=" + config.metro.location +
 function getMetroTime(data) {
 
     var directions = JSON.parse(data);
+    if (directions.status == "INVALID_REQUEST") {
+        console.error("Unable to get route data due to bad API request");
+        return false;
+    }
 
     var leg = directions.routes[0].legs[0];
 
@@ -51,6 +55,9 @@ function getData(departureTime) {
                 res.on('end', function() {
 
                     var result = getMetroTime(allData);
+                    if (!result) {
+                        reject("Unable to get metro time data");
+                    }
 
                     accept(result);
                 });
