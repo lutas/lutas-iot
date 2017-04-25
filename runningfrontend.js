@@ -41,7 +41,7 @@ module.exports = function(app, express) {
             
             res.render('error', {
                 title: "Failed to login to Runtastic",
-                message: err.message
+                message: err.message || err
             });
         });
     });

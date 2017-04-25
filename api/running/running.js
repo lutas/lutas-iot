@@ -97,15 +97,21 @@ module.exports = {
         var api = this.api;
 
         var completedPromise = new Promise(function(completedAccept, completedReject) {
-            api.fetchActivities(30, {'from': new Date(from), 'to': new Date(to)}, function(err, activities) {
+            api.fetchActivities(30, {
+                'from': new Date(from), 
+                'to': new Date(to)
+            }, function(err, activities) {
 
                 if (err) {
                     console.error("Failed to get this month's running activities");
+                    console.error(err);
                     completedReject(err);
                     return;
                 }
 
-                completedAccept(activities.filter(function(val) { return val != null }));
+                completedAccept(activities.filter(function(val) {
+                     return val != null;
+                }));
             })
         });
 
