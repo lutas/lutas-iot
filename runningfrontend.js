@@ -36,11 +36,13 @@ module.exports = function(app, express) {
         
         downloadData().then(function(data) { 
 
+            data.page = "Running";
+
             res.render('running', data);
         }, function(err) {
             
             res.render('error', {
-                title: "Failed to login to Runtastic",
+                page: "Failed to login to Runtastic",
                 message: err.message || err
             });
         });

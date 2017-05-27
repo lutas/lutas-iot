@@ -5,7 +5,7 @@ var handleError = function(err) {
 
     console.error(err.message || err);
 
-    res.render('error', {
+    this.render('error', {
         title: "Failed getting information for frontend",
         message: err.message || err
     })
@@ -14,6 +14,8 @@ var handleError = function(err) {
 module.exports = function(app, express) {
 
 app.get('/', function(req, res) {
+
+    console.log("Loading page");
     
     var now = new Date();
     var time = now.getTime();
@@ -34,6 +36,7 @@ app.get('/', function(req, res) {
         // serve the reporting HTML
         res.render('index', {
 
+            page: 'Home',
             weather: data[0],            
             metrotimes: data[1],
             calendarEvents: data[2].getRecentEvents(today, todayPlus),
@@ -43,7 +46,11 @@ app.get('/', function(req, res) {
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
             }
         });
-    }, handleError);
+    }, handleError.bind(res))
+    .catch(e => {
+        console.error("Error loading page " + e.message);
+        handleError(e).bind(res);
+    });
 
 });
 
@@ -53,10 +60,26 @@ app.get('/metro', function(req, res) {
 
     api.metro.getNextMetros(timeInSecs, 3).then(function(result) {
         res.render('metro', {
+            page: 'Metro',
             times: result
         });
-    }, handleError);
+    }, handleError.bind(res));
 });
+
+app.get('/lights', function(req, res) {
+
+    Promise.all(api.lights.map(light => light.loaded)).then(function() {
+        
+        res.render('lights', {
+
+            page: 'Lights',
+            lights: api.lights
+        });
+    }, handleError.bind(res))
+    .catch(e => {
+        handleError(e);
+    });
+})
 
 app.get('/light/:lightId', function(req, res) {
 
@@ -80,7 +103,7 @@ app.get('/light/:lightId', function(req, res) {
         };
 
         res.send(data, null, 4);
-    }, handleError);
+    }, handleError.bind(res));
 });
 
 app.get('/light/:lightId/on', function(req, res) {

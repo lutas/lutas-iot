@@ -2,9 +2,13 @@
     {{>head}}
 
     <body>
-        <div class="container">
+        <div id="wrapper">
             {{>nav}}
-            {{{ body }}}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    {{{ body }}}
+                </div>
+            </div>
         </div>
     </body>
 </html>

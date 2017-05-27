@@ -23,7 +23,12 @@ app.engine('.hbs', exphbs({
         secondsToMillis: api.common.secondsToMillis,
         formatDate: api.common.formatDate,
         momentFormat: api.common.momentFormat,
-        metresToMiles: api.running.metresToMiles
+        metresToMiles: api.running.metresToMiles,
+        isNavActive: function(lhs, rhs) {
+            if (lhs === rhs) {
+                return 'class=\"active\"';
+            }
+        }
     }
 }));
 app.set('view engine', '.hbs');

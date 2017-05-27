@@ -1,8 +1,8 @@
 <div class="navbar navbar-default">
     <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">Home</a></li>
-    <li role="presentation"><a href="#">Weather</a></li>
-    <li role="presentation"><a href="#">Baby</a></li>
-    <li role="presentation"><a href="#">Running</a></li>
+    <li role="presentation" {{{isNavActive page "Home" }}}><a href="/">Home</a></li>
+    <li role="presentation" {{{isNavActive page "Metro"}}}><a href="/metro">Metro</a></li>
+    <li role="presentation" {{{isNavActive page "Lights"}}}><a href="/lights">Lights</a></li>
+    <li role="presentation" {{{isNavActive page "Running"}}}><a href="/running">Running</a></li>
     </ul>
 </div>
