@@ -39,8 +39,8 @@ var Calendar = function(result) {
         if (data.hasOwnProperty(k) && data[k].hasOwnProperty("summary")) {
             // cache flattened startTime for later sorting
 
-            data[k].start = moment(data[k].start).tz("Europe/London").format();
-            data[k].end = moment(data[k].end).tz("Europe/London").format();
+            data[k].start = moment.utc(data[k].start).tz("Europe/London").format();
+            data[k].end = moment.utc(data[k].end).tz("Europe/London").format();
 
             data[k].startTime = new Date(data[k].start).getTime();
             events.push(data[k]);
