@@ -8,7 +8,7 @@ var handleError = function(err) {
     this.render('error', {
         title: "Failed getting information for frontend",
         message: err.message || err
-    })
+    });
 };
 
 module.exports = function(app, express) {

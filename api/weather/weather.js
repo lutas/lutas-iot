@@ -29,7 +29,9 @@ module.exports = {
                     return;
                 }
 
-                result[0].forecast = result[0].forecast.splice(2, 3);
+                result[0].forecast = result[0].forecast.splice(1, 3);
+                result[0].forecast[0].shortday = "Today";
+                result[0].forecast[1].shortday = "Tomorrow";
 
                 accept(result[0]);
             });
