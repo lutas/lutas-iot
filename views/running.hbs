@@ -1,3 +1,8 @@
+<script src="./scripts/running.js"></script>
+<script>
+    var getThisMonthActivities = running.getActivities([{{activities}}].reverse());
+</script>
+
 <div class="well">
     <h1>Running</h1>
 </div>
@@ -6,12 +11,16 @@
     <div class="col-md-4 text-center">
         {{>running/run lastRun}}
     </div>
-    <div class="col-md-4 text-center">
+    <div class="col-md-8 text-center">
+        {{>running/monthdistance}}
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12 text-center">
-        {{>running/monthdistance activities}}
+    <div class="col-md-6 text-center">
+        {{>running/monthgraph item="calories" heading="Total calories" total=true}}
+    </div>
+    <div class="col-md-6 text-center">
+        {{>running/monthgraph item="average_speed" heading="Average speed" total=false}}
     </div>
 </div>
 

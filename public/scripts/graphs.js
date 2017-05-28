@@ -6,11 +6,11 @@
 var createAreaGraph = function(parent, data, yAxisLabel) {
     
     var svg = d3.select(parent);
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
+    var margin = {top: 20, right: 20, bottom: 20, left: 40};
 
     var node = svg.node();
-    var width = node.width.baseVal.value - margin.left - margin.right;
-    var height = node.height.baseVal.value - margin.top - margin.bottom;
+    var width = node.clientWidth - margin.left - margin.right;
+    var height = node.clientHeight - margin.top - margin.bottom;
     g = svg.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 

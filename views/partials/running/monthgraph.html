@@ -1,9 +1,9 @@
 <script src="scripts/graphs.js"></script>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Monthly distance</div>
+    <div class="panel-heading">{{heading}}</div>
     <div class="panel-body">
-        <svg id="monthdistance" width="100%" height="50%" ></svg>
+        <svg id="{{item}}" width="100%" height="50%" ></svg>
     </div>
 </div>
 
@@ -18,9 +18,11 @@
         var mapped = data.map(d => {
             var obj = {                
                 x: new Date(d.end_time),
-                y: running.metresToMiles(d.distance) + prevVal
+                y: d.{{item}} + prevVal
             };
-            prevVal = obj.y;
+            {{#if total}}
+                prevVal = obj.y;
+            {{/if}}
             return obj;
         });
 
@@ -45,6 +47,6 @@
             y: 0
         });
 
-        createAreaGraph('#monthdistance', mapped, "Distance (miles)");
+        createAreaGraph('#{{item}}', mapped, {{yAxisLabel}});
     });
 </script>
