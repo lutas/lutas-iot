@@ -18,8 +18,8 @@ module.exports = function(app, express) {
 
                 api.running.getMonthActivities(today.getMonth() + 1, today.getFullYear())
                 .then(function(activities) {
-
-                    data.activities = activities;
+                    
+                    data.activities = activities.map(ids => ids[0]);
 
                     api.running.downloadActivity(activities[0][0])
                     .then(function(lastRunData) {
@@ -56,7 +56,6 @@ module.exports = function(app, express) {
         }).then(function() {
             api.running.downloadActivity(req.params.activityid)
                 .then(function(data) { 
-                    api.running.logout();
 
                     res.setHeader('Content-Type', 'application/json');
                     res.send(JSON.stringify(data, null, 4));

@@ -1,0 +1,75 @@
+<script src="scripts/graphs.js"></script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Monthly distance</div>
+    <div class="panel-body">
+        <svg id="monthdistance" width="90%" height="90%" ></svg>
+    </div>
+</div>
+
+<script>
+    function metresToMiles(metres) {
+        return Math.round((metres / 1000) / 1.6 * 100) / 100;
+    }
+
+    function getActivity(activityId) {
+        return new Promise((accept, reject) => {
+            const url = './running/' + activityId;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: accept,
+                error: reject
+            });  
+        });
+    }
+
+    function getActivities(activities) {
+        var data = [];
+
+        return activities.reduce((prev, activity) => {
+
+            return prev.then(activityData => {
+                if (activityData) {
+                    data.push(activityData);
+                }
+                return getActivity(activity);
+            }, (err) => {throw err});
+        }, Promise.resolve(null))
+        .then(() => Promise.resolve(data));
+    }
+
+    getActivities([{{this}}].reverse()).then(data => {
+
+        if (data.length == 0) {
+            return;
+        }
+
+        firstActivityDate = new Date(data[0].end_time);
+
+        // add ends of graph
+        // start of month
+        data.unshift({
+            end_time: new Date(firstActivityDate.getFullYear(), firstActivityDate.getMonth(), 1).toString(),
+            distance: 0
+        });
+
+        // end of month
+        data.push({
+            end_time: new Date(firstActivityDate.getFullYear(), firstActivityDate.getMonth() + 1, 0).toString(),
+            distance: 0
+        });
+
+        var prevVal = 0;
+        var mapped = data.map(d => {
+            var obj = {                
+                x: new Date(d.end_time),
+                y: metresToMiles(d.distance) + prevVal
+            };
+            prevVal = obj.y;
+            return obj;
+        });
+
+        createAreaGraph('#monthdistance', mapped, "Distance (miles)");
+    });
+</script>
