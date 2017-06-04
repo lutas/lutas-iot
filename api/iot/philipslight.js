@@ -9,7 +9,7 @@ var config = require('../../config');
 
 var PhilipsLight = function(id, philipsId, name) {
 
-    isOn = false;
+    isOn = null;
      
     // doesn't require a connection
     loadedPromise = Promise.resolve();

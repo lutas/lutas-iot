@@ -51,7 +51,11 @@
                 type: 'GET',
                 success: function(data) {
                     console.log(data);
-                    btn.innerHTML = data.isOn ? "On" : "Off"
+                    if (!data.reachable) {
+                        e.target.innerHTML = "??";
+                    } else {
+                        btn.innerHTML = data.isOn ? "On" : "Off";
+                    }
                 },
                 error: function(err) {
                     console.error(err);
