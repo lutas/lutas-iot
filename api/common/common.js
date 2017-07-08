@@ -75,7 +75,7 @@ module.exports = {
     getWeeksFrom: function(dateString) {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
-        var dateTo = new Date(fd[2], fd[1] - 1, fd[0], 12);
+        var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
         var dateToUTC = new Date(dateTo.getUTCFullYear(), dateTo.getUTCMonth(), dateTo.getUTCDate());
 
         var today = new Date();
