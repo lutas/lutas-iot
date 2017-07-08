@@ -60,12 +60,13 @@ module.exports = {
     getWeeksTill: function(dateString) {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
-        var dateTo = new Date(fd[2], fd[1] - 1, fd[0], 12);
+        var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
+        var dateToUTC = new Date(dateTo.getUTCFullYear(), dateTo.getUTCMonth(), dateTo.getUTCDate());
 
         var today = new Date();
-        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 12);
+        var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-        var days = diffDays(dateTo, dateFrom);   
+        var days = diffDays(dateToUTC, dateFromUTC);   
         var weeks = Math.ceil(days / 7);
 
         return weeks;  
@@ -75,11 +76,12 @@ module.exports = {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
         var dateTo = new Date(fd[2], fd[1] - 1, fd[0], 12);
+        var dateToUTC = new Date(dateTo.getUTCFullYear(), dateTo.getUTCMonth(), dateTo.getUTCDate());
 
         var today = new Date();
-        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 12);
+        var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
         
-        var days = diffDays(dateFrom, dateTo);   
+        var days = diffDays(dateFromUTC, dateToUTC);   
         var weeks = Math.floor(days / 7);
 
         return weeks;        
