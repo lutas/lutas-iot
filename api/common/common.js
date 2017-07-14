@@ -66,9 +66,11 @@ module.exports = {
         var today = new Date();
         var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-        var days = diffDays(dateToUTC, dateFromUTC);   
-        var weeks = Math.ceil(days / 7);
+        var days = diffDays(dateToUTC, dateFromUTC); 
+        // include today
+        ++days;
 
+        var weeks = Math.ceil(days / 7);
         return weeks;  
     },
 
@@ -81,9 +83,11 @@ module.exports = {
         var today = new Date();
         var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
         
-        var days = diffDays(dateFromUTC, dateToUTC);   
-        var weeks = Math.floor(days / 7);
+        var days = diffDays(dateFromUTC, dateToUTC);  
+        // include today
+        ++days;
 
+        var weeks = Math.floor(days / 7);
         return weeks;        
     },
 
