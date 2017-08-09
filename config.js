@@ -25,10 +25,6 @@ module.exports = {
         password: process.env["RunPassword"]
     },
 
-    belkin: {
-        livingRoom: process.env["BelkinLivingRoom"]
-    },
-
     philips: {
         username: process.env["PhilipsHueUser"],
         bridgeIP: process.env["PhilipsHueIP"]
