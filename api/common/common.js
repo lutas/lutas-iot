@@ -61,13 +61,16 @@ module.exports = {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
         var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
+        var dateToUTC = new Date(dateTo.getUTCFullYear(), dateTo.getUTCMonth(), dateTo.getUTCDate());
 
         var today = new Date();
-        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+        var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-        var days = diffDays(dateTo, dateFrom);   
+        var days = diffDays(dateToUTC, dateFromUTC); 
+        // include today
+        ++days;
+
         var weeks = Math.ceil(days / 7);
-
         return weeks;  
     },
 
@@ -75,13 +78,16 @@ module.exports = {
 
         var fd = dateString.split('-').map(function(val) { return Number(val); });
         var dateTo = new Date(fd[2], fd[1] - 1, fd[0]);
+        var dateToUTC = new Date(dateTo.getUTCFullYear(), dateTo.getUTCMonth(), dateTo.getUTCDate());
 
         var today = new Date();
-        var dateFrom = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+        var dateFromUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
         
-        var days = diffDays(dateFrom, dateTo);   
-        var weeks = Math.floor(days / 7);
+        var days = diffDays(dateFromUTC, dateToUTC);  
+        // include today
+        ++days;
 
+        var weeks = Math.floor(days / 7);
         return weeks;        
     },
 
