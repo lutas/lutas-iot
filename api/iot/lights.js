@@ -7,7 +7,8 @@ var config = require('../../config');
 let lights = [
     new PhilipsLight(0, 2, "Living Room"),
     new PhilipsLight(1, 1, "Our bedroom"),
-    new PhilipsLight(2, 3, "Office")
+    new PhilipsLight(2, 3, "Office"),
+    new PhilipsLight(3, 4, "Kitchen")
 ];
 
 let wemo = new Wemo();
