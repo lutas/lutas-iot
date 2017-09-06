@@ -15,7 +15,7 @@ let wemo = new Wemo();
 
 let index = lights.length;
 // discover Belkin lights
-wemo.discover(function(deviceInfo) {
+wemo.discover(function(err, deviceInfo) {
 
     function getIndexFor(friendlyName) {
         for (let i = 0; i < lights.length; ++i) {

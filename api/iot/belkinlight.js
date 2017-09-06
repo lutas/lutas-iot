@@ -11,8 +11,13 @@ var Light = function(id, name, deviceIP) {
     var client;    
     var loadedPromise = new Promise(function(accept, reject) {
 
-        wemo.load(deviceIP + "/setup.xml", function(deviceInfo) {
+        wemo.load(deviceIP + "/setup.xml", function(err, deviceInfo) {
 
+            if (err) {
+                reject(err);
+                return;
+            }
+            
             client = wemo.client(deviceInfo);
             client.on('binaryState', function(value) {
                 console.log(name + " = " + value);
