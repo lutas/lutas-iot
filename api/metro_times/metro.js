@@ -82,17 +82,17 @@ function getData(departureTime) {
         }
 
         var newDepartureTime = data.departure_time.value + WaitTimeTillNextMetro;
-        var promise = getData(newDepartureTime).then(process);
+        var promise = getData(newDepartureTime).then(process, () => Promise.reject('Failed to get data'));
         return promise;
     }
 
     // call promises in series
     return new Promise(function(accept, reject) { 
                     
-        getData(departureTime).then(process).then(function(val) {
+        getData(departureTime).then(process, reject).then(function(val) {
 
             accept(val);
-        });
+        }, reject);
     });
 
 }
