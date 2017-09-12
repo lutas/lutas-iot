@@ -38,7 +38,8 @@ app.get('/', function(req, res) {
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var todayPlus = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7);
 
-    var allLightsLoaded = Promise.all(api.lights.map(light => light.loaded));
+    var lightPromises = api.lights.map(light => debugPromise('Loading light: ' + light.name, light.loaded));
+    var allLightsLoaded = Promise.all(lightPromises);
 
     Promise.all([
         debugPromise('weather', api.weather.getTodaysWeather()),

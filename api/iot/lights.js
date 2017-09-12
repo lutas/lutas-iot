@@ -15,6 +15,7 @@ let wemo = new Wemo();
 
 let index = lights.length;
 // discover Belkin lights
+console.log('Scanning for Wemo devices');
 wemo.discover(function(err, deviceInfo) {
 
     function getIndexFor(friendlyName) {
@@ -34,6 +35,7 @@ wemo.discover(function(err, deviceInfo) {
 
         // if this light already exists then replace it, otherwise create a new index
         let existingIndex = getIndexFor(deviceInfo.friendlyName);
+        console.log('Adding Belkin light:', deviceInfo.friendlyName);
         if (existingIndex) {
             lights[existingIndex] = new BelkinLight(existingIndex, deviceInfo.friendlyName, url);
         } else {            
