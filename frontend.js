@@ -11,6 +11,20 @@ var handleError = function(err) {
     });
 };
 
+var debugPromise = function(msg, promise) {
+    return new Promise((accept, reject) => {
+
+        console.log('Starting', msg);
+        promise.then(res => {
+            console.log('Finished', msg);
+            accept(res);
+        }, res => {
+            console.log('Failed', msg);
+            reject(res);
+        });
+    });
+}
+
 module.exports = function(app, express) {
 
 app.get('/', function(req, res) {
@@ -27,10 +41,10 @@ app.get('/', function(req, res) {
     var allLightsLoaded = Promise.all(api.lights.map(light => light.loaded));
 
     Promise.all([
-                api.weather.getTodaysWeather(),
-                api.metro.getNextMetros(timeInSecs, 3),
-                api.calendar.get(config.calendar.icalUrl),
-                allLightsLoaded
+        debugPromise('weather', api.weather.getTodaysWeather()),
+        debugPromise('metro', api.metro.getNextMetros(timeInSecs, 3)),
+        debugPromise('calendar', api.calendar.get(config.calendar.icalUrl)),
+        debugPromise('lights', allLightsLoaded)
                 ])
     .then(function(data) {
         // serve the reporting HTML
