@@ -103,23 +103,10 @@ app.get('/light/:lightId', function(req, res) {
 
     light.isOn().then(function(value) {
 
-        var isOn;
-        var isReachable;
-
-        if (value.hasOwnProperty("state")) {
-            // philips light
-            isOn = value.state.on;
-            isReachable = value.state.reachable;
-        } else {
-            // belkin light
-            isOn = value != 0;
-            isReachable = true;
-        }
-
         var data = {
             name: light.name,
-            isOn: isOn,
-            reachable: isReachable
+            isOn: value.state.on,
+            reachable: value.state.reachable
         };
 
         res.send(data, null, 4);

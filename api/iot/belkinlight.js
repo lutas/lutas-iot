@@ -10,10 +10,17 @@ var Light = function(id, name, deviceIP) {
 
     var client;    
     var loadedPromise = new Promise(function(accept, reject) {
+        
+        var timeoutId = setTimeout(() => {
+            console.log('Timeout waiting for Belkin light', name);
+            accept('Failed to connect to Wemo light');
+        }, 3000);
 
+        console.log('Wemo connecting to', name);
         wemo.load(deviceIP + "/setup.xml", function(err, deviceInfo) {
 
             if (err) {
+                console.log('Wemo failed to connect', name);
                 reject(err);
                 return;
             }
@@ -23,12 +30,19 @@ var Light = function(id, name, deviceIP) {
                 console.log(name + " = " + value);
                 isOn = value;
             });
+
+            clearTimeout(timeoutId);
             
+            console.log('Wemo connected to', name);
             accept(client);
         });
     });
 
     function changeState(on) {
+
+        if (!client) {
+            return Promise.reject('Failed to change light');
+        }
 
         return new Promise(function(accept, reject) {
             client.setBinaryState(on, function(err, response) {
@@ -57,6 +71,12 @@ var Light = function(id, name, deviceIP) {
         },
 
         isOn: function() {
+            if (!client) {
+                return Promise.resolve({
+                    state: { isOn: false, reachable: false }
+                });
+            }
+
             return new Promise(function(accept, reject) {
 
                 client.getBinaryState(function(err, state) {
@@ -64,7 +84,15 @@ var Light = function(id, name, deviceIP) {
                         console.error("Failed to get light state");
                         reject(err);
                     } else {
-                        accept(state);
+
+                        var data = {
+                            state: { 
+                                // belkin light
+                                isOn: state != 0,
+                                reachable: true
+                            }
+                        };                                   
+                        accept(data);
                     }                
                 })
             });
