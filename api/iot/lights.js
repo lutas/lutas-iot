@@ -8,8 +8,10 @@ let lights = [
     new PhilipsLight(0, 2, "Living Room"),
     new PhilipsLight(1, 1, "Our bedroom"),
     new PhilipsLight(2, 3, "Office"),
-    new PhilipsLight(3, 4, "Kitchen"),
-    new PhilipsLight(4, 5, "Landing")
+    new PhilipsLight(3, 4, "Downstairs toilet"),
+    new PhilipsLight(4, 5, "Landing"),
+    new PhilipsLight(5, 6, "Ada's bedroom"),
+    new PhilipsLight(6, 7, "Porch")
 ];
 
 let wemo = new Wemo();
