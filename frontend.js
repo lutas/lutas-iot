@@ -59,7 +59,8 @@ app.get('/', function(req, res) {
             lights: api.lights,
             baby: {
                 weeksTill: api.common.getWeeksTill(config.datesTo[0]),
-                weeksFrom: api.common.getWeeksFrom(config.datesFrom[0])
+                weeksFrom: api.common.getWeeksFrom(config.datesFrom[0]),
+                weeksOld: api.common.getWeeksFrom(config.datesFrom[1])
             }
         });
     }, handleError.bind(res))
