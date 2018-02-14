@@ -4,5 +4,6 @@ module.exports = {
     common: require('./common/common'),
     running: require('./running/running'),
     lights: require('./iot/lights'),
-    calendar: require('./calendar/calendar')
+    calendar: require('./calendar/calendar'),
+    verium: require('./crypto/verium')
 };

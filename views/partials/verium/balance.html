@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Mining balance</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>VRM</th>
+                    <th>GBP</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Confirmed</td>
+                <td>{{round this.balance.confirmed 7}}</td>
+                <td>£{{convertcurrency this.balance.confirmed this.vrm.price_gbp}}</td>
+            </tr>
+            <tr>
+                <td>Pending</td>
+                <td>{{round this.balance.unconfirmed 7}}</td>
+                <td>£{{convertcurrency this.balance.unconfirmed this.vrm.price_gbp}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -46,7 +46,8 @@ app.get('/', function(req, res) {
         debugPromise('weather', api.weather.getTodaysWeather()),
         debugPromise('metro', api.metro.getNextMetros(timeInSecs, 3)),
         debugPromise('calendar', api.calendar.get(config.calendar.icalUrl)),
-        debugPromise('lights', allLightsLoaded)
+        debugPromise('lights', allLightsLoaded),
+        debugPromise('verium', api.verium.get())
                 ])
     .then(function(data) {
         // serve the reporting HTML
@@ -61,7 +62,8 @@ app.get('/', function(req, res) {
                 weeksTill: api.common.getWeeksTill(config.datesTo[0]),
                 weeksFrom: api.common.getWeeksFrom(config.datesFrom[0]),
                 weeksOld: api.common.getWeeksFrom(config.datesFrom[1])
-            }
+            },
+            verium: data[4]
         });
     }, handleError.bind(res))
     .catch(e => {
@@ -81,6 +83,34 @@ app.get('/metro', function(req, res) {
             times: result
         });
     }, handleError.bind(res));
+});
+
+
+app.get('/verium', function(req, res) {
+    
+    api.verium.get().then(function(data) {
+
+        res.render('verium', {
+            page: 'Verium',
+            verium: data
+        });
+    }, handleError.bind(res));
+});
+
+app.get('/verium/basicdata', function(req, res) {
+
+    api.verium.get().then(data => {        
+        res.status(200);
+        res.send({  
+            vrm_gbp: Number(data.vrm.price_gbp).toFixed(2),
+            vrc_gbp: Number(data.vrc.price_gbp).toFixed(2),
+            confirmed: Number(data.balance.confirmed).toFixed(7),
+            pending: Number(data.balance.unconfirmed).toFixed(7)
+        });
+    }, err => {
+        res.status(500);
+        res.send(err.message);
+    })
 });
 
 app.get('/lights', function(req, res) {

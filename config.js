@@ -32,6 +32,10 @@ module.exports = {
 
     calendar: {
         icalUrl: process.env["CalendarUrl"]
+    },
+
+    crypto: {
+        pooliumAPI: process.env["PooliumAPI"]
     }
 
 };

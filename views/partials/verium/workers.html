@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+        <div class="panel-heading">Workers</div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Shares</th>
+                        <th>Hashrate</th>
+                    </tr>
+                </thead>
+                
+                {{#each this.workers}}
+                <tr>
+                    <td>{{username}}</td>
+                    <td>{{round shares 3}}</td>
+                    <td>{{hashrate}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>

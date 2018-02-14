@@ -28,6 +28,12 @@ app.engine('.hbs', exphbs({
             if (lhs === rhs) {
                 return 'class=\"active\"';
             }
+        },
+        round: function(num, precision) {
+            return Number(num).toFixed(precision);
+        },
+        convertcurrency: function(x, y) { 
+            return (x * y).toFixed(2);
         }
     }
 }));
