@@ -146,33 +146,58 @@ app.get('/light/:lightId', function(req, res) {
 
 app.get('/light/:lightId/on', function(req, res) {
 
-    api.lights[req.params.lightId].on().then(function(success) {
-
-        res.status(200);
-        res.send(success);
-    }, function(err) {
-
+    const error = function(err) {
         res.status(500);
         res.send(err.message);
-    });
+    };
+
+    var data = api.lights[req.params.lightId].isOn().then(function(info) {
+        if (info.state.reachable) {
+
+            api.lights[req.params.lightId].on().then(function(success) { 
+                
+                success[0].reachable = true;
+                res.status(200);
+                res.send(success);
+            }, error)
+            .catch(error);
+        } else {
+
+            res.status(200);
+            res.send([{
+                reachable: false          
+            }]);
+        }
+    },
+    error);
 });
 
 app.get('/light/:lightId/off', function(req, res) {
 
-    api.lights[req.params.lightId].off().then(function(success) {
-
-        res.status(200);
-        res.send(success);
-    }, function(err) {
-
+    const error = function(err) {
         res.status(500);
         res.send(err.message);
-    })
-    .catch(function(err) {
+    };
 
-        res.status(500);
-        res.send(err.message);
-    });
+    var data = api.lights[req.params.lightId].isOn().then(function(info) {
+        if (info.state.reachable) {
+
+            api.lights[req.params.lightId].off().then(function(success) { 
+                
+                success[0].reachable = true;
+                res.status(200);
+                res.send(success);
+            }, error)
+            .catch(error);
+        } else {
+
+            res.status(200);
+            res.send([{
+                reachable: false          
+            }]);
+        }
+    },
+    error);
 });
 
 }

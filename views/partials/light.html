@@ -30,8 +30,13 @@
             type: 'GET',
             success: function(data) {
                 console.log(data);
-                on = !on;
-                e.target.innerHTML = on ? "On" : "Off";
+                if (data[0].reachable) {
+                    on = !on;
+                    e.target.innerHTML = on ? "On" : "Off";
+                }
+                else {
+                    e.target.innerHTML = "??";
+                }
             },
             error: function(err) {
                 console.error(err);
