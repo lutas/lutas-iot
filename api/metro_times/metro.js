@@ -21,6 +21,11 @@ function getMetroTime(data) {
         return false;
     }
 
+    if (directions.routes.length == 0 || directions.routes[0].legs.length == 0) {
+        console.error("No routes found");
+        return false;
+    }
+
     var leg = directions.routes[0].legs[0];
 
     var step = leg.steps.find(function(step) {
@@ -41,9 +46,12 @@ function getData(departureTime) {
 
     return new Promise(function(accept, reject) {
 
+        var url = getUrl(departureTime);
+        console.log('Google maps: ', url);
+
         http.get({
                 host: apiDataHost,
-                path: getUrl(departureTime)
+                path: url
             }, function(res) {
 
                 var allData = "";
